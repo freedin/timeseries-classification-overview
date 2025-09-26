@@ -7,7 +7,6 @@ img.centered {
 
 /* captions with wider margins */
 .figure-caption {
-    text-align: center;
     margin-left: 20%;
     margin-right: 20%;
     font-style: italic;
