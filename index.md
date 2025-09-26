@@ -1,17 +1,16 @@
 # Time series classification – an overview
 
-by Fredrik Edin
-
-nov 9, 2020 
+*by Fredrik Edin, nov 9, 2020*
 
 Time series classification ([Fig. 1](#F1)) is a relative late bloomer in the field of machine learning. However, in recent years there has been a real surge of data, algorithms and open source code that can be used to tackle problems in new and better ways.
 
 This blog post aims to give a basic overview of the field. My aim is that it should be possible to follow for the interested reader even without a background in machine learning. I am not an expert in this field, so any faults or misconceptions are entirely my own. But hopefully this will give you readers an overview and further avenues for explorations.
 
 <a id="F1"></a>
-![img](docs/Fig1.png)
 
-*<b>Fig. 1.</b> Time series classification example. Samples from the widely used synthetic Cylinder-Bell-Funnel (CBF) benchmark dataset [[1](#1)]. Each time series belongs to one of three classes: cylinders, bells and funnels. Adapted from [[2](#2)] with permission from Patrick Schäfer.*
+![img](docs/Fig1.png){: .centered }
+
+<p class="figure-caption"><b>Fig. 1.</b> Time series classification example. Samples from the widely used synthetic Cylinder-Bell-Funnel (CBF) benchmark dataset [[1](#1)]. Each time series belongs to one of three classes: cylinders, bells and funnels. Adapted from [[2](#2)] with permission from Patrick Schäfer.</p>
 
 ## Examples of time series and classification problems
 
@@ -54,16 +53,18 @@ So what are some of the algorithms used for time series classification?
 For at least a decade, a technique called dynamic time warping (DTW) combined with 1-nearest neighbor (1-NN) has been a benchmark for other time series classification algorithms to beat [[3](#3)]. 1-nearest neighbor ([Fig. 2](#F2)) is a simple technique where you have a training set of time series [[4](#4)]. You then classify a new incoming time series by finding the time series in the training data that is most similar, and assign the new time series to the same class as that one. You can also have k-nearest neighbors, where you find the k most similar time series and choose the most common class amongst those.
 
 <a id="F2"></a>
-![img](docs/Fig2.png)
+
+![img](docs/Fig2.png){: .centered }
 
 *<b>Fig. 2.</b> 1-nearest neighbor. Based on a dataset of two classes (blue and yellow), a new datapoint (circle) is to be classified. By finding the nearest datapoint, the new datapoint can be classified as belonging to the yellow class.*
 
 DTW [[5](#5)] is used to calculate the distance between two time series ([Fig. 3](#F3)); without a distance 1-NN cannot determine which time series is nearest. The most naive way would be to just take the distance between each point in the time series. However, it is not necessarily clear which points should be compared to which in the two time series. For instance, if two identical time series are just shifted slightly, then this would result in a big distance. DTW solves this by pairing up the different time points by drawing lines between them in such a way that each time point in a series must be connected to a time point in the other series, and two lines must never cross ([Fig. 3](#F3)). The distance is the sum of the difference between the paired time points. DTW chooses the grey lines in a way that minimizes this distance.
 
 <a id="F3"></a>
-![img](docs/Fig3.png)
 
-*<b>Fig 3.</b> DTW. Points in two time series are connected in a way to minimize the distance between two time series (the combined length of all the grey lines). As can be seen from the gray lines being tilted, the latter half of the blue time series is shifted to the right of the latter part of the red time series. DTW is able to connect the corresponding points of the two series to calculate the minimum distance. Adapted from [[6](#6)] with permission from Brian Iwana.*
+![img](docs/Fig3.png){: .centered }
+
+<p class="figure-caption"><b>Fig 3.</b> DTW. Points in two time series are connected in a way to minimize the distance between two time series (the combined length of all the grey lines). As can be seen from the gray lines being tilted, the latter half of the blue time series is shifted to the right of the latter part of the red time series. DTW is able to connect the corresponding points of the two series to calculate the minimum distance. Adapted from [[6](#6)] with permission from Brian Iwana.</p>
 
 ## The benefits of a machine learning model
 
@@ -91,10 +92,11 @@ Perhaps due to relative lack of data, it has been difficult for new algorithms t
 
 One technique is to use shapelets [[12](#12)]. A shapelet is a short time series that has been chosen because it is very indicative of a class ([Fig. 4](#F4)). For example, it could be a particular electrical pattern that is only emitted by microwave ovens and as such can be used when classifying home appliances. Shapelets are different from DTW because they focus on only parts of the time series. When you pass a time series through a shapelet algorithm the output is the minimum distance between the shapelet and all subsequences of the time series (this is called a shapelet transform). This data can then be used to train a classification algorithm, e.g. 1-NN or a machine learning model. In [[13](#13)] an ensemble (see explanation below) of classifiers based on shapelet-transformed data was second best on the UCR/UEA dataset of all tested algorithms.
 
-<a id="F4"></a>
+<a id="F4"></a>{: .centered }
+
 ![img](docs/Fig4.png)
 
-*<b>Fig. 4.</b> Shapelets are small pieces of time series associated with a class. The distance between the time series (blue) and the shapelet (red) is the shortest distance between the shapelet and any part of the time series (here indicated by the dots). Taken from [[14](#14)] with permission from Alexandra Amidon.*
+<p class="figure-caption"><b>Fig. 4.</b> Shapelets are small pieces of time series associated with a class. The distance between the time series (blue) and the shapelet (red) is the shortest distance between the shapelet and any part of the time series (here indicated by the dots). Taken from [[14](#14)] with permission from Alexandra Amidon.</p>
 
 The main difficulty when using shapelets is that it can be hard to know which shapelets to use. One possibility is to manually craft a set of shapelets, but this can be quite difficult and time consuming. A better solution, if possible, is to automatically select shapelets. The way to do this best is an active field of research to a problem that is quite tricky due to the enormous amount of possible shapelets (see [[15](#15)], section VI, and [[13](#13)] for a good overview).
 
@@ -129,9 +131,10 @@ One of the main reasons why dictionary based approaches work well is that the tr
 The most typical interval-based algorithm would be the time series forest [[22](#22)], a type of random forest. A forest is a collection of decision trees. Each decision tree is a machine learning model that takes a data point and assigns a class based on the value of its variables, as shown in [Fig. 5](#F5). By creating a number of trees, each which gets to see a different part of the data, you end up with an ensemble of different tree classifiers (i.e. the forest), each possibly producing a different classification (since it has been trained on slightly different data). You then follow the usual ensemble procedure and choose the most common prediction as your final prediction.
 
 <a id="F5"></a>
-![img](docs/Fig5.png)
 
-*<b>Fig. 5.</b> Decision tree example. A decision tree takes a data point, in this case a game, which can be characterized along a number of different dimensions (here 3: a. type of game, b. multiplayer via Wifi, c. works for 2 players). By traversing the tree, we end up at a purchase decision (as illustrated by the dashed line, a computer game that does not allow for game play via Wifi will not be bought). In a random forest ensemble the aim is to produce trees with different structure whose errors are uncorrelated.*
+![img](docs/Fig5.png){: .centered }
+
+<p class="figure-caption"><b>Fig. 5.</b> Decision tree example. A decision tree takes a data point, in this case a game, which can be characterized along a number of different dimensions (here 3: a. type of game, b. multiplayer via Wifi, c. works for 2 players). By traversing the tree, we end up at a purchase decision (as illustrated by the dashed line, a computer game that does not allow for game play via Wifi will not be bought). In a random forest ensemble the aim is to produce trees with different structure whose errors are uncorrelated.</p>
 
 The special thing of a time series forest is that you divide your time series into n distinct intervals and for each interval you calculate the 3 values mean, standard deviation and slope [[21](#21)]. Thus you end up with 3n variables that you input into the model. One of the tricks is to find how you split your time series into intervals. The performance of time series forests are not as good as BOSS or COTE [[13](#13)].
 
