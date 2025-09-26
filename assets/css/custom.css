@@ -9,6 +9,7 @@ img.centered {
 /* captions with wider margins */
 .figure-caption {
     text-align: justify;
+    text-align-last: justify; /* Forces last line to justify too */
     margin-left: 20%;
     margin-right: 20%;
     font-style: italic;
