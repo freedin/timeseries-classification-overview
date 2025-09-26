@@ -1,4 +1,7 @@
-# Time series classification – an overview
+---
+layout: default
+title: Time series classification – an overview
+---
 
 *by Fredrik Edin, nov 9, 2020*
 
@@ -10,7 +13,7 @@ This blog post aims to give a basic overview of the field. My aim is that it sho
 
 ![img](docs/Fig1.png){: .centered }
 
-<p class="figure-caption"><b>Fig. 1.</b> Time series classification example. Samples from the widely used synthetic Cylinder-Bell-Funnel (CBF) benchmark dataset [[1](#1)]. Each time series belongs to one of three classes: cylinders, bells and funnels. Adapted from [[2](#2)] with permission from Patrick Schäfer.</p>
+<p class="figure-caption"><b>Fig. 1.</b> Time series classification example. Samples from the widely used synthetic Cylinder-Bell-Funnel (CBF) benchmark dataset [<a href="#1">1</a>]. Each time series belongs to one of three classes: cylinders, bells and funnels. Adapted from [<a href="#2">2</a>] with permission from Patrick Schäfer.</p>
 
 ## Examples of time series and classification problems
 
@@ -56,7 +59,7 @@ For at least a decade, a technique called dynamic time warping (DTW) combined wi
 
 ![img](docs/Fig2.png){: .centered }
 
-*<b>Fig. 2.</b> 1-nearest neighbor. Based on a dataset of two classes (blue and yellow), a new datapoint (circle) is to be classified. By finding the nearest datapoint, the new datapoint can be classified as belonging to the yellow class.*
+<p class="figure-caption"><b>Fig. 2.</b> 1-nearest neighbor. Based on a dataset of two classes (blue and yellow), a new datapoint (circle) is to be classified. By finding the nearest datapoint, the new datapoint can be classified as belonging to the yellow class.</p>
 
 DTW [[5](#5)] is used to calculate the distance between two time series ([Fig. 3](#F3)); without a distance 1-NN cannot determine which time series is nearest. The most naive way would be to just take the distance between each point in the time series. However, it is not necessarily clear which points should be compared to which in the two time series. For instance, if two identical time series are just shifted slightly, then this would result in a big distance. DTW solves this by pairing up the different time points by drawing lines between them in such a way that each time point in a series must be connected to a time point in the other series, and two lines must never cross ([Fig. 3](#F3)). The distance is the sum of the difference between the paired time points. DTW chooses the grey lines in a way that minimizes this distance.
 
@@ -64,7 +67,7 @@ DTW [[5](#5)] is used to calculate the distance between two time series ([Fig. 3
 
 ![img](docs/Fig3.png){: .centered }
 
-<p class="figure-caption"><b>Fig 3.</b> DTW. Points in two time series are connected in a way to minimize the distance between two time series (the combined length of all the grey lines). As can be seen from the gray lines being tilted, the latter half of the blue time series is shifted to the right of the latter part of the red time series. DTW is able to connect the corresponding points of the two series to calculate the minimum distance. Adapted from [[6](#6)] with permission from Brian Iwana.</p>
+<p class="figure-caption"><b>Fig 3.</b> DTW. Points in two time series are connected in a way to minimize the distance between two time series (the combined length of all the grey lines). As can be seen from the gray lines being tilted, the latter half of the blue time series is shifted to the right of the latter part of the red time series. DTW is able to connect the corresponding points of the two series to calculate the minimum distance. Adapted from [<a href="#6">6</a>] with permission from Brian Iwana.</p>
 
 ## The benefits of a machine learning model
 
@@ -96,7 +99,7 @@ One technique is to use shapelets [[12](#12)]. A shapelet is a short time series
 
 ![img](docs/Fig4.png)
 
-<p class="figure-caption"><b>Fig. 4.</b> Shapelets are small pieces of time series associated with a class. The distance between the time series (blue) and the shapelet (red) is the shortest distance between the shapelet and any part of the time series (here indicated by the dots). Taken from [[14](#14)] with permission from Alexandra Amidon.</p>
+<p class="figure-caption"><b>Fig. 4.</b> Shapelets are small pieces of time series associated with a class. The distance between the time series (blue) and the shapelet (red) is the shortest distance between the shapelet and any part of the time series (here indicated by the dots). Taken from [<a href="#14">14</a>] with permission from Alexandra Amidon.</p>
 
 The main difficulty when using shapelets is that it can be hard to know which shapelets to use. One possibility is to manually craft a set of shapelets, but this can be quite difficult and time consuming. A better solution, if possible, is to automatically select shapelets. The way to do this best is an active field of research to a problem that is quite tricky due to the enormous amount of possible shapelets (see [[15](#15)], section VI, and [[13](#13)] for a good overview).
 
