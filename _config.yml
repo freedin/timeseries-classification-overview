@@ -1,7 +1,1 @@
-title: "Time series classification – an overview"
 theme: minima
-markdown: kramdown
-highlighter: rouge
-kramdown:
-  math_engine: mathjax
-  syntax_highlighter: rouge
