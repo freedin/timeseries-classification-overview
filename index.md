@@ -3,6 +3,8 @@ layout: default
 title: Time series classification – an overview
 ---
 
+# Time series classification – an overview
+
 *by Fredrik Edin, nov 9, 2020*
 
 Time series classification ([Fig. 1](#F1)) is a relative late bloomer in the field of machine learning. However, in recent years there has been a real surge of data, algorithms and open source code that can be used to tackle problems in new and better ways.
